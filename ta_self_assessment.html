@@ -1,0 +1,420 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>교류분석(TA) 자아상태 자가진단 테스트</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .question-card {
+            transition: all 0.3s ease;
+        }
+        .question-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .radio-option {
+            transition: all 0.2s ease;
+        }
+        .radio-option:hover {
+            background-color: #f3f4f6;
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- 헤더 -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">교류분석(TA) 자아상태 자가진단</h1>
+            <p class="text-lg text-gray-600 mb-6">
+                당신의 5가지 자아상태를 알아보는 50문항 테스트입니다.<br>
+                각 문항을 읽고 평소 자신의 모습과 가장 가까운 정도를 선택해주세요.
+            </p>
+            <div class="bg-white rounded-lg p-6 shadow-lg mb-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">5가지 자아상태</h3>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 text-sm">
+                    <div class="bg-red-50 p-3 rounded-lg">
+                        <div class="font-semibold text-red-700">CP</div>
+                        <div class="text-red-600">비판적 부모자아</div>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded-lg">
+                        <div class="font-semibold text-green-700">NP</div>
+                        <div class="text-green-600">양육적 부모자아</div>
+                    </div>
+                    <div class="bg-blue-50 p-3 rounded-lg">
+                        <div class="font-semibold text-blue-700">A</div>
+                        <div class="text-blue-600">성인자아</div>
+                    </div>
+                    <div class="bg-yellow-50 p-3 rounded-lg">
+                        <div class="font-semibold text-yellow-700">FC</div>
+                        <div class="text-yellow-600">자유로운 어린이자아</div>
+                    </div>
+                    <div class="bg-purple-50 p-3 rounded-lg">
+                        <div class="font-semibold text-purple-700">AC</div>
+                        <div class="text-purple-600">순응적 어린이자아</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 진행률 표시 -->
+        <div class="mb-6">
+            <div class="flex justify-between text-sm text-gray-600 mb-2">
+                <span>진행률</span>
+                <span id="progress-text">0/50</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-3">
+                <div id="progress-bar" class="progress-bar bg-blue-500 h-3 rounded-full" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- 테스트 폼 -->
+        <form id="ta-test-form" class="space-y-6">
+            <!-- 문항들이 여기에 동적으로 생성됩니다 -->
+        </form>
+
+        <!-- 제출 버튼 -->
+        <div class="text-center mt-8">
+            <button type="button" id="submit-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled>
+                결과 확인하기
+            </button>
+        </div>
+
+        <!-- 결과 섹션 -->
+        <div id="result-section" class="hidden mt-12">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">검사 결과</h2>
+                
+                <!-- 차트 -->
+                <div class="mb-8">
+                    <div class="w-full max-w-md mx-auto">
+                        <canvas id="result-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- 점수 표 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4 text-center">자아상태별 점수</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse border border-gray-300">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="border border-gray-300 px-4 py-2">자아상태</th>
+                                    <th class="border border-gray-300 px-4 py-2">점수</th>
+                                    <th class="border border-gray-300 px-4 py-2">백분율</th>
+                                </tr>
+                            </thead>
+                            <tbody id="score-table">
+                                <!-- 점수가 여기에 동적으로 생성됩니다 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 해석 -->
+                <div id="interpretation" class="space-y-6">
+                    <!-- 해석이 여기에 동적으로 생성됩니다 -->
+                </div>
+
+                <!-- 다시 하기 버튼 -->
+                <div class="text-center mt-8">
+                    <button type="button" id="reset-btn" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300">
+                        다시 검사하기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 문항 데이터 (순서가 섞여있음)
+        const questions = [
+            { id: 31, text: "새로운 것을 시도해보는 것을 좋아한다", type: "FC" },
+            { id: 12, text: "친구나 동료가 고민이 있으면 들어주려고 한다", type: "NP" },
+            { id: 45, text: "윗사람이나 권위자 앞에서는 조심스러워진다", type: "AC" },
+            { id: 23, text: "문제가 생기면 원인을 분석해서 해결책을 찾는다", type: "A" },
+            { id: 7, text: "사회의 질서와 규범이 무너지는 것 같아 우려된다", type: "CP" },
+            { id: 38, text: "자유롭게 행동하는 것을 좋아한다", type: "FC" },
+            { id: 19, text: "다른 사람을 보호하고 돌봐주고 싶은 마음이 든다", type: "NP" },
+            { id: 42, text: "거절하기가 어려워서 부탁을 잘 들어준다", type: "AC" },
+            { id: 26, text: "의견을 말할 때 근거를 제시하는 편이다", type: "A" },
+            { id: 14, text: "누군가 아프거나 슬퍼하면 같이 마음이 아프다", type: "NP" },
+            { id: 49, text: "다른 사람을 실망시키지 않으려고 애쓴다", type: "AC" },
+            { id: 35, text: "하고 싶은 일이 있으면 즉석에서 해보는 편이다", type: "FC" },
+            { id: 8, text: "다른 사람이 실수하면 '그러면 안 되지'라고 말하는 편이다", type: "CP" },
+            { id: 21, text: "결정을 내릴 때 사실과 정보를 먼저 확인한다", type: "A" },
+            { id: 47, text: "갈등 상황을 피하려고 하는 편이다", type: "AC" },
+            { id: 16, text: "사람들이 편안하게 느낄 수 있도록 배려한다", type: "NP" },
+            { id: 33, text: "재미있는 일을 찾아서 하는 편이다", type: "FC" },
+            { id: 44, text: "다른 사람이 화를 내면 내 잘못인 것 같아 불안하다", type: "AC" },
+            { id: 29, text: "효율성과 실용성을 중요하게 생각한다", type: "A" },
+            { id: 11, text: "다른 사람이 힘들어하면 도와주고 싶어진다", type: "NP" },
+            { id: 40, text: "상상력을 발휘하는 것을 좋아한다", type: "FC" },
+            { id: 48, text: "비판받는 것이 두렵다", type: "AC" },
+            { id: 25, text: "상황을 냉정하게 파악하고 현실적으로 접근한다", type: "A" },
+            { id: 18, text: "누군가 실패했을 때 위로해주고 싶어진다", type: "NP" },
+            { id: 36, text: "유머나 농담을 즐기는 편이다", type: "FC" },
+            { id: 43, text: "실수를 하면 죄책감을 많이 느낀다", type: "AC" },
+            { id: 22, text: "감정보다는 논리적으로 생각하려고 노력한다", type: "A" },
+            { id: 15, text: "다른 사람의 필요를 먼저 생각하는 편이다", type: "NP" },
+            { id: 39, text: "놀이나 게임을 즐기는 편이다", type: "FC" },
+            { id: 46, text: "다른 사람의 기대에 부응하려고 노력한다", type: "AC" },
+            { id: 24, text: "객관적인 데이터를 바탕으로 판단하는 편이다", type: "A" },
+            { id: 17, text: "다른 사람의 장점을 찾아서 말해주는 편이다", type: "NP" },
+            { id: 41, text: "다른 사람의 눈치를 보는 편이다", type: "AC" },
+            { id: 28, text: "다른 사람의 말을 들을 때 사실인지 확인해본다", type: "A" },
+            { id: 37, text: "호기심이 많아서 이것저것 알아보고 싶어한다", type: "FC" },
+            { id: 20, text: "사람들과 따뜻한 관계를 유지하는 것이 중요하다", type: "NP" },
+            { id: 50, text: "혼자 결정하기보다는 다른 사람의 의견을 따르는 편이다", type: "AC" },
+            { id: 27, text: "계획을 세울 때 실현 가능성을 먼저 고려한다", type: "A" },
+            { id: 13, text: "다른 사람을 칭찬하고 격려하는 것을 좋아한다", type: "NP" },
+            { id: 34, text: "창의적인 아이디어를 내는 것을 좋아한다", type: "FC" },
+            { id: 1, text: "규칙을 어기는 사람을 보면 참을 수 없다", type: "CP" },
+            { id: 30, text: "문제 해결을 위해 체계적으로 접근한다", type: "A" },
+            { id: 6, text: "젊은 세대의 행동을 보면 한심할 때가 많다", type: "CP" },
+            { id: 32, text: "즐거운 일이 있으면 감정을 솔직하게 표현한다", type: "FC" },
+            { id: 9, text: "원칙과 기준을 지키는 것을 매우 중요하게 생각한다", type: "CP" },
+            { id: 4, text: "예의와 도덕을 지키지 않는 사람들이 많아서 걱정이다", type: "CP" },
+            { id: 10, text: "잘못된 것을 보면 바로잡아야 한다고 생각한다", type: "CP" },
+            { id: 2, text: "옳고 그름을 명확히 구분하는 것이 중요하다", type: "CP" },
+            { id: 3, text: "다른 사람의 잘못된 행동을 지적해주는 편이다", type: "CP" },
+            { id: 5, text: "일을 할 때는 완벽하게 해야 한다고 생각한다", type: "CP" }
+        ];
+
+        const scaleLabels = [
+            "전혀 그렇지 않다",
+            "그렇지 않다", 
+            "보통이다",
+            "그렇다",
+            "매우 그렇다"
+        ];
+
+        let answeredCount = 0;
+
+        // 문항 생성
+        function generateQuestions() {
+            const form = document.getElementById('ta-test-form');
+            
+            questions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-card bg-white rounded-lg shadow-md p-6';
+                
+                questionDiv.innerHTML = `
+                    <div class="mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">
+                            ${index + 1}. ${question.text}
+                        </h3>
+                        <div class="space-y-2">
+                            ${scaleLabels.map((label, value) => `
+                                <label class="radio-option flex items-center p-3 rounded-lg cursor-pointer border border-gray-200">
+                                    <input type="radio" name="q${question.id}" value="${value + 1}" class="mr-3 text-blue-600" onchange="updateProgress()">
+                                    <span class="text-gray-700">${value + 1}. ${label}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                form.appendChild(questionDiv);
+            });
+        }
+
+        // 진행률 업데이트
+        function updateProgress() {
+            const totalQuestions = questions.length;
+            const answeredQuestions = document.querySelectorAll('input[type="radio"]:checked').length;
+            
+            answeredCount = answeredQuestions;
+            const percentage = (answeredQuestions / totalQuestions) * 100;
+            
+            document.getElementById('progress-bar').style.width = percentage + '%';
+            document.getElementById('progress-text').textContent = `${answeredQuestions}/${totalQuestions}`;
+            
+            const submitBtn = document.getElementById('submit-btn');
+            if (answeredQuestions === totalQuestions) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('disabled:bg-gray-400', 'disabled:cursor-not-allowed');
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.classList.add('disabled:bg-gray-400', 'disabled:cursor-not-allowed');
+            }
+        }
+
+        // 결과 계산
+        function calculateResults() {
+            const scores = { CP: 0, NP: 0, A: 0, FC: 0, AC: 0 };
+            
+            questions.forEach(question => {
+                const selectedValue = document.querySelector(`input[name="q${question.id}"]:checked`);
+                if (selectedValue) {
+                    scores[question.type] += parseInt(selectedValue.value);
+                }
+            });
+            
+            return scores;
+        }
+
+        // 결과 표시
+        function showResults(scores) {
+            const totalScore = Object.values(scores).reduce((sum, score) => sum + score, 0);
+            
+            // 폼 숨기기, 결과 보이기
+            document.getElementById('ta-test-form').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'none';
+            document.querySelector('.mb-6').style.display = 'none'; // 진행률 바 숨기기
+            document.getElementById('result-section').classList.remove('hidden');
+            
+            // 점수 표 생성
+            const scoreTable = document.getElementById('score-table');
+            const egoStates = {
+                'CP': { name: '비판적 부모자아', color: 'text-red-600' },
+                'NP': { name: '양육적 부모자아', color: 'text-green-600' },
+                'A': { name: '성인자아', color: 'text-blue-600' },
+                'FC': { name: '자유로운 어린이자아', color: 'text-yellow-600' },
+                'AC': { name: '순응적 어린이자아', color: 'text-purple-600' }
+            };
+            
+            Object.entries(scores).forEach(([type, score]) => {
+                const percentage = ((score / 50) * 100).toFixed(1);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="border border-gray-300 px-4 py-2 font-semibold ${egoStates[type].color}">
+                        ${type} - ${egoStates[type].name}
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2 text-center">${score}/50</td>
+                    <td class="border border-gray-300 px-4 py-2 text-center">${percentage}%</td>
+                `;
+                scoreTable.appendChild(row);
+            });
+            
+            // 차트 생성
+            createChart(scores);
+            
+            // 해석 생성
+            generateInterpretation(scores);
+        }
+
+        // 차트 생성
+        function createChart(scores) {
+            const ctx = document.getElementById('result-chart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['CP\n(비판적 부모)', 'NP\n(양육적 부모)', 'A\n(성인)', 'FC\n(자유로운 어린이)', 'AC\n(순응적 어린이)'],
+                    datasets: [{
+                        label: '자아상태 점수',
+                        data: [scores.CP, scores.NP, scores.A, scores.FC, scores.AC],
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(59, 130, 246, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 50,
+                            ticks: {
+                                stepSize: 10
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        // 해석 생성
+        function generateInterpretation(scores) {
+            const interpretationDiv = document.getElementById('interpretation');
+            
+            // 가장 높은 점수의 자아상태 찾기
+            const maxScore = Math.max(...Object.values(scores));
+            const dominantStates = Object.entries(scores).filter(([type, score]) => score === maxScore);
+            
+            const interpretations = {
+                'CP': {
+                    title: '비판적 부모자아 (CP)',
+                    high: '규칙과 원칙을 중시하며, 도덕적 기준이 높습니다. 책임감이 강하고 완벽주의적 성향이 있어 리더십을 발휘할 수 있지만, 때로는 지나치게 비판적이거나 경직될 수 있습니다.',
+                    color: 'border-red-200 bg-red-50'
+                },
+                'NP': {
+                    title: '양육적 부모자아 (NP)',
+                    high: '다른 사람을 돌보고 배려하는 마음이 큽니다. 따뜻하고 지지적이며 다른 사람의 성장을 도와주는 능력이 뛰어나지만, 때로는 과도한 희생이나 간섭으로 이어질 수 있습니다.',
+                    color: 'border-green-200 bg-green-50'
+                },
+                'A': {
+                    title: '성인자아 (A)',
+                    high: '논리적이고 합리적인 사고를 합니다. 객관적 판단력이 뛰어나고 문제 해결 능력이 좋아 신뢰받는 존재이지만, 때로는 감정적 측면을 간과하거나 차갑게 느껴질 수 있습니다.',
+                    color: 'border-blue-200 bg-blue-50'
+                },
+                'FC': {
+                    title: '자유로운 어린이자아 (FC)',
+                    high: '창의적이고 자발적이며 즐거움을 추구합니다. 호기심이 많고 새로운 시도를 좋아하여 혁신적인 아이디어를 내지만, 때로는 충동적이거나 책임감이 부족할 수 있습니다.',
+                    color: 'border-yellow-200 bg-yellow-50'
+                },
+                'AC': {
+                    title: '순응적 어린이자아 (AC)',
+                    high: '다른 사람의 기대에 부응하려고 노력하며 협조적입니다. 갈등을 피하고 조화를 중시하여 팀워크가 좋지만, 때로는 자신의 의견을 표현하지 못하거나 스트레스를 받을 수 있습니다.',
+                    color: 'border-purple-200 bg-purple-50'
+                }
+            };
+            
+            // 주요 자아상태 해석
+            const mainInterpretation = document.createElement('div');
+            mainInterpretation.className = `p-6 rounded-lg border-2 ${interpretations[dominantStates[0][0]].color}`;
+            mainInterpretation.innerHTML = `
+                <h3 class="text-xl font-bold mb-3">주요 자아상태: ${interpretations[dominantStates[0][0]].title}</h3>
+                <p class="text-gray-700 leading-relaxed">${interpretations[dominantStates[0][0]].high}</p>
+            `;
+            interpretationDiv.appendChild(mainInterpretation);
+            
+            // 전체적인 조언
+            const adviceDiv = document.createElement('div');
+            adviceDiv.className = 'p-6 bg-gray-50 rounded-lg border';
+            adviceDiv.innerHTML = `
+                <h3 class="text-xl font-bold mb-3">균형잡힌 자아상태를 위한 조언</h3>
+                <div class="space-y-3 text-gray-700">
+                    <p>• <strong>이상적인 균형:</strong> 모든 자아상태가 적절히 발달되어 상황에 맞게 사용되는 것이 좋습니다.</p>
+                    <p>• <strong>낮은 점수의 자아상태:</strong> 상대적으로 낮은 점수를 받은 자아상태의 긍정적 측면을 개발해보세요.</p>
+                    <p>• <strong>과도하게 높은 자아상태:</strong> 지나치게 높은 자아상태는 때로 문제가 될 수 있으니 다른 자아상태와의 균형을 맞춰보세요.</p>
+                    <p>• <strong>상황별 활용:</strong> 업무에서는 A(성인자아), 인간관계에서는 NP(양육적 부모자아), 창의적 활동에서는 FC(자유로운 어린이자아)를 적절히 활용해보세요.</p>
+                </div>
+            `;
+            interpretationDiv.appendChild(adviceDiv);
+        }
+
+        // 이벤트 리스너
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const scores = calculateResults();
+            showResults(scores);
+        });
+
+        document.getElementById('reset-btn').addEventListener('click', function() {
+            location.reload();
+        });
+
+        // 페이지 로드 시 문항 생성
+        document.addEventListener('DOMContentLoaded', function() {
+            generateQuestions();
+        });
+    </script>
+</body>
+</html>
