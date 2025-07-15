@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>교류상태 실습 및 예시 답안</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">교류상태 실습 및 예시 답안</h1>
+    <p class="text-gray-600 mb-6 text-center">각 상황별로 교류 상태를 선택하고 개선된 응답을 작성한 후, “답안 보기” 버튼을 눌러 예시 답안과 해설을 확인하세요.</p>
+
+    <div class="space-y-6" id="practice-cases"></div>
+  </div>
+
+  <script>
+    const data = [
+      {q:"상사: '이 보고서는 왜 이렇게 늦게 나왔죠?'<br>직원: '죄송합니다… 다시는 이런 일이 없겠습니다.'",s:"교차 교류 (상사 CP → 직원 AC)",a:"보고서가 늦어진 이유는 ○○ 때문입니다. 앞으로 일정 관리를 강화하겠습니다. (A→A)",h:"상사는 비판적 부모자아로 질책했고, 직원은 순응적 어린이자아로 사과했습니다. 논리적인 이유 제시(A→A)로 전환하면 상사의 비판이 줄고 협력적인 분위기가 조성됩니다."},
+      {q:"동료: '이번 일정은 좀 미뤄야 할 것 같은데요.'<br>나: '왜 또 그래요? 지난번에도 그랬잖아요.'",s:"교차 교류 (동료 A → 나 CP)",a:"일정이 늦어지는 이유를 구체적으로 알려줄 수 있을까요? 함께 조정 방법을 찾아보죠. (A→A)",h:"상대는 어른자아로 합리적 논의를 기대했지만 내가 부모자아로 비난했습니다. 이유를 묻고 해결책을 함께 찾는 A→A 교류가 이상적입니다."},
+      {q:"부하 직원: '이 일은 제가 꼭 맡고 싶습니다!'<br>나: '그래요? 그럼 이번엔 맡아보세요.' (속마음: ‘또 실패할 텐데…’)",s:"이면 교류 (겉: NP→FC, 속: CP→AC)",a:"이전 경험에서 어려움이 있었지만, 이번엔 어떤 계획을 세웠나요? 필요하면 제가 지원하겠습니다. (NP→A)",h:"겉으로는 칭찬했지만 속으로 비판이 숨어 있었습니다. 계획을 묻고 지원 의사를 밝히는 NP→A 교류로 신뢰를 쌓을 수 있습니다."},
+      {q:"상사: '이 부분은 왜 규정대로 처리하지 않았습니까?'<br>직원: '죄송합니다. 제가 제대로 확인하지 못했습니다.'",s:"교차 교류 (상사 CP → 직원 AC)",a:"규정대로 처리하지 못한 이유를 설명드리고, 다음부턴 준수하겠습니다. (A→A)",h:"상사는 규칙 위반에 대해 질책했지만, 사실 기반의 설명과 개선 의지를 밝히면 상사의 비난이 줄고 신뢰가 회복됩니다."},
+      {q:"동료: '제가 한 번 더 검토해보겠습니다.'<br>나: '그럴 필요 없어요. 이미 충분합니다.' (속으로는 불만)",s:"이면 교류 (겉: NP→FC, 속: CP→AC)",a:"충분히 검토되었지만, 혹시 다른 의견 있으신가요? (A→A)",h:"겉으론 수용했지만 속으로 불만이 있었습니다. 상대의 의견을 존중하는 A→A 교류로 진정성 있는 대화를 유도해야 합니다."},
+      {q:"부하 직원: '이건 제 책임이 아닌 것 같습니다.'<br>나: '책임은 회피하면 안 됩니다.'",s:"상보 교류 (CP→AC)",a:"규정 준수의 중요성을 설명하고 개선 방안을 제시 (A→A)",h:"상보 교류지만 권위적인 CP→AC로만 대하면 방어적이 될 수 있습니다. A→A로 전환하여 문제 해결 중심의 접근이 바람직합니다."},
+      {q:"상사: '왜 아직 이 작업이 진행되지 않았죠?'<br>직원: '자료가 늦게 도착해서요.'<br>상사: '그럼 미리 보고라도 했어야죠.'",s:"교차 교류 (CP→AC)",a:"자료 지연 상황을 미리 보고했어야 했습니다. 다음부터는 사전에 공유하겠습니다. (A→A)",h:"비판적 부모자아로 질책받은 상황이지만, 책임을 인정하고 사전 공유를 약속하면 신뢰 회복이 가능합니다."},
+      {q:"동료: '이 제안은 어떠신가요?'<br>나: '그건 현실성이 부족한 것 같네요.'",s:"교차 교류 (A→CP)",a:"현실성 부족의 이유를 구체적으로 설명하며 대안을 제시 (A→A)",h:"상대는 A→A로 건설적 의견을 원했지만 내가 CP→AC로 반응했습니다. 대안을 제시하는 A→A가 이상적입니다."},
+      {q:"부하 직원: '저 이번에 이 프로젝트 맡고 싶습니다.'<br>나: '좋습니다. 구체적인 계획은 무엇인가요?'",s:"상보 교류 (NP→A)",a:"계획을 듣고 현실적인 조언을 추가하며 지원 의사 표명 (NP→A)",h:"양육적 부모자아로 지지하면서도 어른자아로 구체적 계획을 묻는 방식이 바람직하며 동기부여를 강화합니다."},
+      {q:"상사: '이번 실수는 왜 발생했죠?'<br>직원: '정확히 파악해보니 시스템 오류 때문이었습니다.'",s:"상보 교류 (A→A)",a:"시스템 오류를 파악했고, 재발 방지 방안을 마련했습니다. (A→A)",h:"사실에 기반한 A→A 교류는 문제 해결에 집중할 수 있으며, 신뢰와 전문성을 강화합니다."}
+    ];
+
+    function createPracticeAnswers() {
+      const container = document.getElementById('practice-cases');
+      data.forEach((d,i)=>{
+        const div = document.createElement('div');
+        div.className="bg-white p-4 rounded shadow";
+        div.innerHTML = `<h3 class='font-semibold mb-2'>상황 ${i+1}</h3>
+        <p class='text-gray-700 mb-2'>${d.q}</p>
+        <select class='w-full border rounded p-2 mb-2'>
+          <option>교류 상태 선택</option>
+          <option>상보 교류</option>
+          <option>교차 교류</option>
+          <option>이면 교류</option>
+        </select>
+        <textarea class='w-full border rounded p-2 mb-2' rows='2' placeholder='개선된 응답 작성'></textarea>
+        <button onclick="toggleAnswer(${i})" class='bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded'>답안 보기</button>
+        <div id='answer-${i}' class='hidden mt-2 p-3 rounded border border-gray-200'>
+          <p class='text-sm'><strong class='text-gray-800'>교류 상태:</strong> <span class='text-blue-600 font-semibold'>${d.s}</span></p>
+          <p class='mt-1'><strong class='text-gray-800'>개선된 응답:</strong> <span class='text-green-700 font-medium'>${d.a}</span></p>
+          <p class='mt-2 text-gray-700'><strong>해설:</strong> <span class='text-purple-700'>${d.h}</span></p>
+        </div>`;
+        container.appendChild(div);
+      });
+    }
+
+    function toggleAnswer(i){
+      const ans = document.getElementById(`answer-${i}`);
+      ans.classList.toggle('hidden');
+    }
+
+    window.onload = createPracticeAnswers;
+  </script>
+</body>
+</html>
