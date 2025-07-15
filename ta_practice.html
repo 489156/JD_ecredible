@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>교류 상태 실습</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">교류 상태 파악 및 개선 실습</h1>
+    <p class="text-gray-600 mb-6 text-center">상황을 읽고 교류 상태를 선택하고, 적절한 개선 응답을 작성해 보세요.</p>
+    <div class="space-y-6" id="practice-cases"></div>
+    <div class="text-center mt-6">
+      <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded">작성 완료</button>
+    </div>
+  </div>
+
+  <script>
+    const practiceData = [
+      {q:"상사: '이 보고서는 왜 이렇게 늦게 나왔죠?'<br>직원: '죄송합니다… 다시는 이런 일이 없겠습니다.'"},
+      {q:"동료: '이번 일정은 좀 미뤄야 할 것 같은데요.'<br>나: '왜 또 그래요? 지난번에도 그랬잖아요.'"},
+      {q:"부하 직원: '이 일은 제가 꼭 맡고 싶습니다!'<br>나: '그래요? 그럼 이번엔 맡아보세요.' (속마음: ‘또 실패할 텐데…’)"},
+      {q:"상사: '이 부분은 왜 규정대로 처리하지 않았습니까?'<br>직원: '죄송합니다. 제가 제대로 확인하지 못했습니다.'"},
+      {q:"동료: '제가 한 번 더 검토해보겠습니다.'<br>나: '그럴 필요 없어요. 이미 충분합니다.' (속으로는 불만)"},
+      {q:"부하 직원: '이건 제 책임이 아닌 것 같습니다.'<br>나: '책임은 회피하면 안 됩니다.'"},
+      {q:"상사: '왜 아직 이 작업이 진행되지 않았죠?'<br>직원: '자료가 늦게 도착해서요.'<br>상사: '그럼 미리 보고라도 했어야죠.'"},
+      {q:"동료: '이 제안은 어떠신가요?'<br>나: '그건 현실성이 부족한 것 같네요.'"},
+      {q:"부하 직원: '저 이번에 이 프로젝트 맡고 싶습니다.'<br>나: '좋습니다. 구체적인 계획은 무엇인가요?'"},
+      {q:"상사: '이번 실수는 왜 발생했죠?'<br>직원: '정확히 파악해보니 시스템 오류 때문이었습니다.'"}
+    ];
+
+    function createPractice() {
+      const container = document.getElementById('practice-cases');
+      practiceData.forEach((d,i)=>{
+        const div = document.createElement('div');
+        div.className="bg-white p-4 rounded shadow";
+        div.innerHTML = `<h3 class='font-semibold mb-2'>상황 ${i+1}</h3><p class='text-gray-700 mb-2'>${d.q}</p>
+        <select class='w-full border rounded p-2 mb-2'>
+          <option>교류 상태 선택</option>
+          <option>상보 교류</option>
+          <option>교차 교류</option>
+          <option>이면 교류</option>
+        </select>
+        <textarea class='w-full border rounded p-2' rows='2' placeholder='개선된 응답 작성'></textarea>`;
+        container.appendChild(div);
+      });
+    }
+    window.onload = createPractice;
+  </script>
+</body>
+</html>

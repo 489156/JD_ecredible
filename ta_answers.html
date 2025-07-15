@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>교류 상태 예시 답안</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">교류 상태 예시 답안</h1>
+
+    <div class="bg-blue-50 p-4 rounded mb-6 text-gray-700">
+      <h3 class="font-bold text-lg mb-2">교류 상태 종류 설명</h3>
+      <p><strong>상보 교류:</strong> 기대한 자아 상태의 반응이 돌아와 원활한 소통이 이루어지는 상태. 예) A→A, NP→FC</p>
+      <p><strong>교차 교류:</strong> 기대와 다른 자아 상태의 반응이 돌아와 대화가 끊기거나 갈등이 발생하는 상태. 예) A→A로 질문했으나 CP→AC로 응답</p>
+      <p><strong>이면 교류:</strong> 표면적으로는 상보처럼 보이지만 속의 의도가 달라 오해나 불신을 초래하는 상태.</p>
+    </div>
+
+    <div class="space-y-4" id="answer-cases"></div>
+  </div>
+
+  <script>
+    const answerData = [
+      {s:"교차 교류 (상사 CP → 직원 AC)",a:"보고서가 늦어진 이유는 ○○ 때문입니다. 앞으로 일정 관리를 강화하겠습니다. (A→A)"},
+      {s:"교차 교류 (동료 A → 나 CP)",a:"일정이 늦어지는 이유를 구체적으로 알려줄 수 있을까요? 함께 조정 방법을 찾아보죠. (A→A)"},
+      {s:"이면 교류 (겉: NP→FC, 속: CP→AC)",a:"이전 경험에서 어려움이 있었지만, 이번엔 어떤 계획을 세웠나요? 필요하면 제가 지원하겠습니다. (NP→A)"},
+      {s:"교차 교류 (상사 CP → 직원 AC)",a:"규정대로 처리하지 못한 이유를 설명드리고, 다음부턴 준수하겠습니다. (A→A)"},
+      {s:"이면 교류 (겉: NP→FC, 속: CP→AC)",a:"충분히 검토되었지만, 혹시 다른 의견 있으신가요? (A→A)"},
+      {s:"상보 교류 (CP→AC)",a:"규정 준수의 중요성을 설명하고 개선 방안을 제시 (A→A)"},
+      {s:"교차 교류 (CP→AC)",a:"자료 지연 상황을 미리 보고했어야 했습니다. 다음부터는 사전에 공유하겠습니다. (A→A)"},
+      {s:"교차 교류 (A→CP)",a:"현실성 부족의 이유를 구체적으로 설명하며 대안을 제시 (A→A)"},
+      {s:"상보 교류 (NP→A)",a:"계획을 듣고 현실적인 조언을 추가하며 지원 의사 표명 (NP→A)"},
+      {s:"상보 교류 (A→A)",a:"시스템 오류를 파악했고, 재발 방지 방안을 마련했습니다. (A→A)"}
+    ];
+
+    function createAnswers() {
+      const container = document.getElementById('answer-cases');
+      answerData.forEach((d,i)=>{
+        const div = document.createElement('div');
+        div.className="bg-white p-4 rounded shadow";
+        div.innerHTML = `<h3 class='font-semibold'>상황 ${i+1}</h3>
+        <p><strong>교류 상태:</strong> ${d.s}</p>
+        <p><strong>개선된 응답:</strong> ${d.a}</p>`;
+        container.appendChild(div);
+      });
+    }
+    window.onload = createAnswers;
+  </script>
+</body>
+</html>
