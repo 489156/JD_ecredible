@@ -1,166 +1,118 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="referrer" content="no-referrer">
-    <title>교류분석(TA) 교류 패턴 분석 실습</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .practice-card {
-            transition: all 0.3s ease;
-        }
-        .practice-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>교류분석(TA) 학습 통합 페이지</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    @media (max-width: 768px) {
+      iframe {
+        height: 1400px !important;
+      }
+      .tab-btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+      }
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-        <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-gray-800 mb-4">교류 패턴 분석 및 개선 실습</h1>
-            <p class="text-lg text-gray-600 mb-6">
-                자가진단 테스트를 통해 자신의 자아상태를 파악했다면,<br>이제 실제 대화 상황에 적용하여 건강한 소통 방법을 연습해봅시다.
-            </p>
-             <a href="ta_self_assessment.html" class="text-blue-600 hover:text-blue-800 transition">← 자가진단 테스트로 돌아가기</a>
-        </div>
+<body class="bg-gray-100 min-h-screen">
+  <div class="container mx-auto px-4 py-8 max-w-5xl">
+    <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">교류분석(TA) 학습 통합 페이지</h1>
 
-        <div id="worksheet-section" class="space-y-8">
-
-            <div class="practice-card bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-xl font-bold text-gray-800 mb-4">상황 1: 보고 지연 상황</h3>
-                <blockquote class="bg-gray-50 p-4 rounded-lg border-l-4 border-gray-300 mb-6">
-                    <p class="font-semibold">박 팀장:</p>
-                    <p class="mb-2">"김 책임, 어제까지 주기로 한 결과 보고서는 어떻게 됐나요? 아직 공유가 안 된 것 같아서요."</p>
-                    <p class="font-semibold">김 책임:</p>
-                    <p>"지금 다른 급한 건들이 많아서 정신이 하나도 없습니다. 그것까지 신경 쓸 겨를이 없었어요."</p>
-                </blockquote>
-                
-                <div class="space-y-4">
-                    <div>
-                        <label class="font-semibold text-gray-700">1. 교류 상태 파악:</label>
-                        <div class="flex space-x-4 mt-2">
-                            <label><input type="radio" name="q1_state" class="mr-1"> 상보</label>
-                            <label><input type="radio" name="q1_state" class="mr-1"> 교차</label>
-                            <label><input type="radio" name="q1_state" class="mr-1"> 이면</label>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="font-semibold text-gray-700">2. 개선된 응답 (김 책임):</label>
-                        <textarea class="mt-2 w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="3" placeholder="'성인(A) 자아'로 어떻게 반응하면 좋을지 작성해보세요."></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <div class="practice-card bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-xl font-bold text-gray-800 mb-4">상황 2: 회의 중 의견 제시</h3>
-                <blockquote class="bg-gray-50 p-4 rounded-lg border-l-4 border-gray-300 mb-6">
-                    <p class="font-semibold">최 책임:</p>
-                    <p class="mb-2">"이번 신규 프로젝트는 마케팅팀과 초반부터 긴밀하게 협업하며 방향을 잡는 게 중요할 것 같습니다."</p>
-                    <p class="font-semibold">이 책임:</p>
-                    <p>"네, 좋은 의견입니다. 구체적으로 어떤 부분을 먼저 논의하면 좋을지 함께 이야기 나눠볼까요?"</p>
-                </blockquote>
-                 <div class="space-y-4">
-                    <div>
-                        <label class="font-semibold text-gray-700">1. 교류 상태 파악:</label>
-                        <div class="flex space-x-4 mt-2">
-                            <label><input type="radio" name="q2_state" class="mr-1"> 상보</label>
-                            <label><input type="radio" name="q2_state" class="mr-1"> 교차</label>
-                            <label><input type="radio" name="q2_state" class="mr-1"> 이면</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="practice-card bg-white rounded-lg shadow-md p-6">
-                 <h3 class="text-xl font-bold text-gray-800 mb-4">상황 3: 늦은 밤 업무 지시</h3>
-                <blockquote class="bg-gray-50 p-4 rounded-lg border-l-4 border-gray-300 mb-6">
-                    <p class="font-semibold">정 팀장 (밤 11시, 메신저로):</p>
-                    <p class="mb-2">"이 책임, 내일 아침 회의 때 필요한 자료인데, 지금 바로 좀 처리해 줄 수 있어요?"</p>
-                    <p class="font-semibold">이 책임 (한숨을 쉬며):</p>
-                    <p>"...네, 팀장님. 지금 바로 처리하겠습니다."</p>
-                </blockquote>
-                <div class="space-y-4">
-                    <div>
-                        <label class="font-semibold text-gray-700">1. 교류 상태 파악:</label>
-                        <div class="flex space-x-4 mt-2">
-                            <label><input type="radio" name="q3_state" class="mr-1"> 상보</label>
-                            <label><input type="radio" name="q3_state" class="mr-1"> 교차</label>
-                            <label><input type="radio" name="q3_state" class="mr-1"> 이면</label>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="font-semibold text-gray-700">2. 개선된 응답 (이 책임):</label>
-                        <textarea class="mt-2 w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="3" placeholder="'성인(A) 자아'로 어떻게 반응하면 좋을지 작성해보세요."></textarea>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-8">
-                <button type="button" id="submit-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300">
-                    정답 및 해설 보기
-                </button>
-            </div>
-        </div>
-
-        <div id="answer-section" class="hidden mt-12">
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">예시 답안 및 해설</h2>
-                
-                <div class="space-y-8">
-                    <div class="p-6 rounded-lg border border-red-200 bg-red-50">
-                        <h3 class="text-xl font-bold mb-3 text-red-800">상황 1 해설: 보고 지연 상황 (교차 교류  Crossed Transaction)</h3>
-                        <p class="text-gray-700 mb-4">
-                            박 팀장은 <strong>'사실(A)'</strong>에 대해 질문했지만, 김 책임은 자신의 힘든 <strong>'감정(C)'</strong>을 방어적으로 표현했습니다. 이는 대화를 단절시키고 갈등을 유발할 수 있는 대표적인 <strong>교차 교류</strong>입니다.
-                        </p>
-                        <div class="bg-green-100 p-4 rounded-lg">
-                            <p class="font-semibold text-green-800 mb-2">💡 개선된 응답 (A → A)</p>
-                            <p class="text-green-900">"죄송합니다. 다른 긴급 업무들로 인해 어제까지 마무리하지 못했습니다. 현재 상황을 간단히 말씀드리고, 오늘 오후 3시까지 정리해서 다시 보고드려도 괜찮을까요?"</p>
-                        </div>
-                    </div>
-                    
-                    <div class="p-6 rounded-lg border border-green-200 bg-green-50">
-                        <h3 class="text-xl font-bold mb-3 text-green-800">상황 2 해설: 회의 중 의견 제시 (상보 교류 Complementary Transaction)</h3>
-                        <p class="text-gray-700 mb-4">
-                            최 책임의 합리적인 제안<strong>(A)</strong>에 이 책임이 동의하며 구체적인 실행 방안을 묻는<strong>(A)</strong> 이상적인 <strong>상보 교류</strong>입니다. 조직 내에서 가장 장려되어야 할 건설적인 대화 방식입니다.
-                        </p>
-                    </div>
-                    
-                    <div class="p-6 rounded-lg border border-purple-200 bg-purple-50">
-                        <h3 class="text-xl font-bold mb-3 text-purple-800">상황 3 해설: 늦은 밤 업무 지시 (이면 교류 Ulterior Transaction)</h3>
-                        <p class="text-gray-700 mb-4">
-                            표면적으로는 업무 요청<strong>(A↔A)</strong>이지만, 이면에는 '내 지시를 거절할 수 없다<strong>(P→C)</strong>'는 권위와 '부당하지만 따를 수밖에 없다<strong>(C→P)</strong>'는 체념의 심리가 숨어있는 <strong>이면 교류</strong>입니다. 당장의 갈등은 없지만, 불만을 누적시켜 관계를 해칠 수 있습니다.
-                        </p>
-                        <div class="bg-green-100 p-4 rounded-lg">
-                            <p class="font-semibold text-green-800 mb-2">💡 개선된 응답 (A → A)</p>
-                            <p class="text-green-900">"네, 팀장님. 확인했습니다. 혹시 내일 오전 9시까지 처리해서 보고드려도 괜찮을지 여쭤봅니다. 만약 지금 꼭 필요한 자료라면 바로 처리하겠습니다."</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="text-center mt-8">
-                    <button type="button" id="reset-btn" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300">
-                        다시 풀어보기
-                    </button>
-                </div>
-            </div>
-        </div>
-
+    <!-- 메뉴 -->
+    <div class="flex flex-col md:flex-row justify-center md:space-x-4 mb-8">
+      <button onclick="showSection('assessment')" class="tab-btn bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">자가진단</button>
+      <button onclick="showSection('practice')" class="tab-btn bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">교류상태 실습</button>
+      <button onclick="showSection('answers')" class="tab-btn bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">예시 답안</button>
     </div>
 
-    <script>
-        document.getElementById('submit-btn').addEventListener('click', function() {
-            document.getElementById('worksheet-section').classList.add('hidden');
-            document.getElementById('answer-section').classList.remove('hidden');
-            window.scrollTo(0, 0); // 페이지 상단으로 스크롤
-        });
+    <!-- 자가진단 섹션 -->
+    <div id="assessment" class="section">
+      <iframe src="ta_self_assessment (1).html" class="w-full h-[1200px] md:h-[1200px] rounded-lg shadow"></iframe>
+    </div>
 
-        document.getElementById('reset-btn').addEventListener('click', function() {
-            document.getElementById('answer-section').classList.add('hidden');
-            document.getElementById('worksheet-section').classList.remove('hidden');
-             window.scrollTo(0, 0);
-        });
-    </script>
+    <!-- 교류상태 실습 섹션 -->
+    <div id="practice" class="section hidden">
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">교류 상태 파악 및 개선 실습</h2>
+        <p class="text-gray-600 mb-6">상황을 읽고 교류 상태를 선택하고, 적절한 개선 응답을 작성하세요.</p>
+        <div class="space-y-6">
+          <!-- 상황 1 -->
+          <div class="bg-gray-50 p-4 rounded">
+            <h3 class="font-semibold mb-2">상황 1</h3>
+            <p class="text-gray-700 mb-2"><strong>상사:</strong> "이 보고서는 왜 이렇게 늦게 나왔죠?"<br><strong>직원:</strong> "죄송합니다… 다시는 이런 일이 없겠습니다."</p>
+            <select class="w-full border rounded p-2 mb-2">
+              <option>교류 상태 선택</option>
+              <option>상보 교류</option>
+              <option>교차 교류</option>
+              <option>이면 교류</option>
+            </select>
+            <textarea class="w-full border rounded p-2" rows="2" placeholder="개선된 응답 작성"></textarea>
+          </div>
+          <!-- 상황 2 -->
+          <div class="bg-gray-50 p-4 rounded">
+            <h3 class="font-semibold mb-2">상황 2</h3>
+            <p class="text-gray-700 mb-2"><strong>동료:</strong> "이번 일정은 좀 미뤄야 할 것 같은데요."<br><strong>나:</strong> "왜 또 그래요? 지난번에도 그랬잖아요."</p>
+            <select class="w-full border rounded p-2 mb-2">
+              <option>교류 상태 선택</option>
+              <option>상보 교류</option>
+              <option>교차 교류</option>
+              <option>이면 교류</option>
+            </select>
+            <textarea class="w-full border rounded p-2" rows="2" placeholder="개선된 응답 작성"></textarea>
+          </div>
+          <!-- 상황 3 -->
+          <div class="bg-gray-50 p-4 rounded">
+            <h3 class="font-semibold mb-2">상황 3</h3>
+            <p class="text-gray-700 mb-2"><strong>부하 직원:</strong> "이 일은 제가 꼭 맡고 싶습니다!"<br><strong>나:</strong> "그래요? 그럼 이번엔 맡아보세요." (속마음: ‘또 실패할 텐데…’)</p>
+            <select class="w-full border rounded p-2 mb-2">
+              <option>교류 상태 선택</option>
+              <option>상보 교류</option>
+              <option>교차 교류</option>
+              <option>이면 교류</option>
+            </select>
+            <textarea class="w-full border rounded p-2" rows="2" placeholder="개선된 응답 작성"></textarea>
+          </div>
+        </div>
+        <div class="text-center mt-6">
+          <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded">작성 완료</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 예시 답안 섹션 -->
+    <div id="answers" class="section hidden">
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">예시 답안</h2>
+        <div class="space-y-4">
+          <div class="bg-gray-50 p-4 rounded">
+            <h3 class="font-semibold">상황 1</h3>
+            <p><strong>교류 상태:</strong> 교차 교류 (상사 CP → 직원 AC)</p>
+            <p><strong>개선된 응답:</strong> "보고서가 늦어진 이유는 ○○ 때문입니다. 앞으로 일정 관리를 강화하겠습니다." (A→A)</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded">
+            <h3 class="font-semibold">상황 2</h3>
+            <p><strong>교류 상태:</strong> 교차 교류 (동료 A → 나 CP)</p>
+            <p><strong>개선된 응답:</strong> "일정이 늦어지는 이유를 구체적으로 알려줄 수 있을까요? 함께 조정 방법을 찾아보죠." (A→A)</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded">
+            <h3 class="font-semibold">상황 3</h3>
+            <p><strong>교류 상태:</strong> 이면 교류 (겉: NP→FC, 속: CP→AC)</p>
+            <p><strong>개선된 응답:</strong> "이전 경험에서 어려움이 있었지만, 이번엔 어떤 계획을 세웠나요? 필요하면 제가 지원하겠습니다." (NP→A)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+    }
+  </script>
 </body>
 </html>
