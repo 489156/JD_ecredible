@@ -5,106 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>교류분석(TA) 학습 통합 페이지</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
+    body { font-size: 1rem; }
+    @media (max-width: 1024px) { body { font-size: 0.95rem; } }
     @media (max-width: 768px) {
-      iframe {
-        height: 1400px !important;
-      }
-      .tab-btn {
-        width: 100%;
-        margin-bottom: 0.5rem;
-      }
+      body { font-size: 0.9rem; }
+      iframe { height: 1600px !important; }
+      .tab-btn { width: 100%; margin-bottom: 0.5rem; }
     }
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen">
-  <div class="container mx-auto px-4 py-8 max-w-5xl">
+  <div class="container mx-auto px-4 py-8 max-w-6xl">
     <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">교류분석(TA) 학습 통합 페이지</h1>
 
-    <!-- 메뉴 -->
     <div class="flex flex-col md:flex-row justify-center md:space-x-4 mb-8">
       <button onclick="showSection('assessment')" class="tab-btn bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">자가진단</button>
       <button onclick="showSection('practice')" class="tab-btn bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">교류상태 실습</button>
       <button onclick="showSection('answers')" class="tab-btn bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">예시 답안</button>
+      <button onclick="showSection('explanation')" class="tab-btn bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700">교류 상태 상세 설명</button>
     </div>
 
-    <!-- 자가진단 섹션 -->
+    <!-- 자가진단 -->
     <div id="assessment" class="section">
       <iframe src="https://489156.github.io/JD_ecredible/ta_self_assessment.html" class="w-full h-[1200px] md:h-[1200px] rounded-lg shadow"></iframe>
     </div>
 
-    <!-- 교류상태 실습 섹션 -->
+    <!-- 교류상태 실습 -->
     <div id="practice" class="section hidden">
-      <div class="bg-white p-6 rounded-lg shadow">
-        <h2 class="text-2xl font-bold mb-4 text-gray-800">교류 상태 파악 및 개선 실습</h2>
-        <p class="text-gray-600 mb-6">상황을 읽고 교류 상태를 선택하고, 적절한 개선 응답을 작성하세요.</p>
-        <div class="space-y-6">
-          <!-- 상황 1 -->
-          <div class="bg-gray-50 p-4 rounded">
-            <h3 class="font-semibold mb-2">상황 1</h3>
-            <p class="text-gray-700 mb-2"><strong>상사:</strong> "이 보고서는 왜 이렇게 늦게 나왔죠?"<br><strong>직원:</strong> "죄송합니다… 다시는 이런 일이 없겠습니다."</p>
-            <select class="w-full border rounded p-2 mb-2">
-              <option>교류 상태 선택</option>
-              <option>상보 교류</option>
-              <option>교차 교류</option>
-              <option>이면 교류</option>
-            </select>
-            <textarea class="w-full border rounded p-2" rows="2" placeholder="개선된 응답 작성"></textarea>
-          </div>
-          <!-- 상황 2 -->
-          <div class="bg-gray-50 p-4 rounded">
-            <h3 class="font-semibold mb-2">상황 2</h3>
-            <p class="text-gray-700 mb-2"><strong>동료:</strong> "이번 일정은 좀 미뤄야 할 것 같은데요."<br><strong>나:</strong> "왜 또 그래요? 지난번에도 그랬잖아요."</p>
-            <select class="w-full border rounded p-2 mb-2">
-              <option>교류 상태 선택</option>
-              <option>상보 교류</option>
-              <option>교차 교류</option>
-              <option>이면 교류</option>
-            </select>
-            <textarea class="w-full border rounded p-2" rows="2" placeholder="개선된 응답 작성"></textarea>
-          </div>
-          <!-- 상황 3 -->
-          <div class="bg-gray-50 p-4 rounded">
-            <h3 class="font-semibold mb-2">상황 3</h3>
-            <p class="text-gray-700 mb-2"><strong>부하 직원:</strong> "이 일은 제가 꼭 맡고 싶습니다!"<br><strong>나:</strong> "그래요? 그럼 이번엔 맡아보세요." (속마음: ‘또 실패할 텐데…’)</p>
-            <select class="w-full border rounded p-2 mb-2">
-              <option>교류 상태 선택</option>
-              <option>상보 교류</option>
-              <option>교차 교류</option>
-              <option>이면 교류</option>
-            </select>
-            <textarea class="w-full border rounded p-2" rows="2" placeholder="개선된 응답 작성"></textarea>
-          </div>
-        </div>
-        <div class="text-center mt-6">
-          <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded">작성 완료</button>
-        </div>
-      </div>
+      <iframe src="ta_practice.html" class="w-full h-[1600px] rounded-lg shadow"></iframe>
     </div>
 
-    <!-- 예시 답안 섹션 -->
+    <!-- 예시 답안 -->
     <div id="answers" class="section hidden">
-      <div class="bg-white p-6 rounded-lg shadow">
-        <h2 class="text-2xl font-bold mb-4 text-gray-800">예시 답안</h2>
-        <div class="space-y-4">
-          <div class="bg-gray-50 p-4 rounded">
-            <h3 class="font-semibold">상황 1</h3>
-            <p><strong>교류 상태:</strong> 교차 교류 (상사 CP → 직원 AC)</p>
-            <p><strong>개선된 응답:</strong> "보고서가 늦어진 이유는 ○○ 때문입니다. 앞으로 일정 관리를 강화하겠습니다." (A→A)</p>
-          </div>
-          <div class="bg-gray-50 p-4 rounded">
-            <h3 class="font-semibold">상황 2</h3>
-            <p><strong>교류 상태:</strong> 교차 교류 (동료 A → 나 CP)</p>
-            <p><strong>개선된 응답:</strong> "일정이 늦어지는 이유를 구체적으로 알려줄 수 있을까요? 함께 조정 방법을 찾아보죠." (A→A)</p>
-          </div>
-          <div class="bg-gray-50 p-4 rounded">
-            <h3 class="font-semibold">상황 3</h3>
-            <p><strong>교류 상태:</strong> 이면 교류 (겉: NP→FC, 속: CP→AC)</p>
-            <p><strong>개선된 응답:</strong> "이전 경험에서 어려움이 있었지만, 이번엔 어떤 계획을 세웠나요? 필요하면 제가 지원하겠습니다." (NP→A)</p>
-          </div>
-        </div>
-      </div>
+      <iframe src="ta_answers.html" class="w-full h-[1400px] rounded-lg shadow"></iframe>
+    </div>
+
+    <!-- 교류 상태 상세 설명 -->
+    <div id="explanation" class="section hidden">
+      <iframe src="ta_detailed_explanation.html" class="w-full h-[1600px] rounded-lg shadow"></iframe>
     </div>
   </div>
 
