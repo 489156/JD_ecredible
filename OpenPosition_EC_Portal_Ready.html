@@ -1,0 +1,616 @@
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        box-sizing: border-box;
+    }
+    * {
+        box-sizing: border-box;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', Roboto, sans-serif;
+        line-height: 1.7;
+        color: #000000;
+        background: linear-gradient(135deg, #EBEBEB 0%, #f8f9fa 100%);
+        font-weight: 400;
+        letter-spacing: -0.01em;
+    }
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background-color: #FFFFFF;
+        box-shadow: 0 40px 120px rgba(0, 0, 0, 0.08), 0 20px 60px rgba(0, 0, 0, 0.04);
+        min-height: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+    .hero-section {
+        background: linear-gradient(135deg, #002147 0%, #003366 50%, #004080 100%);
+        color: #FFFFFF;
+        padding: 80px 60px 100px;
+        text-align: left;
+        position: relative;
+        overflow: hidden;
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+    }
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+        opacity: 0.6;
+    }
+    .company-logo {
+        position: absolute;
+        top: 40px;
+        right: 40px;
+        width: 100px;
+        height: 100px;
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 3;
+        backdrop-filter: blur(20px);
+    }
+    .company-logo img {
+        width: 50%;
+        height: auto;
+    }
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 600px;
+    }
+    .job-badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.15);
+        color: #FFFFFF;
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 32px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .job-title {
+        font-size: 4rem;
+        font-weight: 900;
+        margin-bottom: 24px;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: #FFFFFF;
+    }
+    .company-name {
+        font-size: 1.5rem;
+        font-weight: 500;
+        opacity: 0.9;
+        margin-bottom: 20px;
+        letter-spacing: 0.02em;
+    }
+    .hero-description {
+        font-size: 1.2rem;
+        font-weight: 400;
+        opacity: 0.85;
+        margin-bottom: 40px;
+        line-height: 1.6;
+        max-width: 500px;
+    }
+    .apply-button {
+        background: linear-gradient(135deg, #FFFFFF 0%, #f8f9fa 100%);
+        color: #002147;
+        padding: 16px 40px;
+        border: none;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration: none;
+        display: inline-block;
+        letter-spacing: 0.02em;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+    .apply-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+    }
+    .section {
+        padding: 80px 60px;
+        position: relative;
+    }
+    .section:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(0, 33, 71, 0.1), transparent);
+    }
+    .section-header {
+        margin-bottom: 60px;
+        text-align: center;
+    }
+    .section-title {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #002147;
+        margin-bottom: 20px;
+        position: relative;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+    }
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #002147, #003366);
+        border-radius: 2px;
+    }
+    .section-subtitle {
+        font-size: 1.2rem;
+        line-height: 1.7;
+        color: #6c757d;
+        max-width: 700px;
+        margin: 0 auto;
+        font-weight: 400;
+    }
+    .section-content {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: #000000;
+    }
+    .company-section {
+        background: linear-gradient(135deg, #EBEBEB 0%, #f8f9fa 100%);
+        position: relative;
+    }
+    .company-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        margin-top: 0;
+        position: relative;
+        z-index: 1;
+    }
+    .stat-item {
+        text-align: center;
+        padding: 50px 30px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 24px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .stat-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 30px 80px rgba(0, 33, 71, 0.15);
+    }
+    .stat-number {
+        font-size: 3.5rem;
+        font-weight: 900;
+        color: #002147;
+        display: block;
+        margin-bottom: 12px;
+        letter-spacing: -0.02em;
+    }
+    .stat-label {
+        font-size: 1.1rem;
+        color: #6c757d;
+        margin-top: 8px;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+    }
+    .job-details {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 32px;
+        margin-top: 32px;
+    }
+    .detail-card {
+        background-color: #FFFFFF;
+        border: 1px solid #EBEBEB;
+        border-radius: 8px;
+        padding: 24px;
+        transition: all 0.3s ease;
+    }
+    .detail-card:hover {
+        box-shadow: 0 4px 16px rgba(0, 33, 71, 0.1);
+        transform: translateY(-2px);
+    }
+    .detail-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #002147;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+    }
+    .detail-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 12px;
+        fill: #002147;
+    }
+    .requirement-list {
+        list-style: none;
+        padding: 0;
+        margin: 16px 0;
+    }
+    .requirement-list li {
+        padding: 8px 0;
+        border-bottom: 1px solid #EBEBEB;
+        position: relative;
+        padding-left: 24px;
+    }
+    .requirement-list li:before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: #002147;
+        font-weight: bold;
+    }
+    .requirement-list li:last-child {
+        border-bottom: none;
+    }
+    .application-section {
+        background: linear-gradient(135deg, #EBEBEB 0%, #FFFFFF 100%);
+    }
+    .additional-info-section {
+        margin-top: 60px;
+        padding: 40px;
+        background: rgba(0, 33, 71, 0.02);
+        border-radius: 20px;
+        border: 1px solid rgba(0, 33, 71, 0.08);
+    }
+    .additional-info-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #002147;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .additional-info-content {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: #6c757d;
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .application-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 24px;
+        margin-top: 32px;
+    }
+    .application-card {
+        background-color: #FFFFFF;
+        padding: 24px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+    .application-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+    .application-icon {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 16px;
+        fill: #002147;
+    }
+    .application-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #002147;
+        margin-bottom: 12px;
+    }
+    .application-description {
+        font-size: 0.9rem;
+        color: #000000;
+        line-height: 1.6;
+    }
+    .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 32px;
+        margin-top: 60px;
+    }
+    .benefit-item {
+        background-color: #FFFFFF;
+        border: none;
+        border-radius: 20px;
+        padding: 40px 32px;
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+        position: relative;
+        overflow: hidden;
+    }
+    .benefit-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 60px rgba(0, 33, 71, 0.15);
+    }
+    .benefit-icon {
+        width: 56px;
+        height: 56px;
+        margin: 0 auto 24px;
+        fill: #002147;
+        padding: 14px;
+        background: linear-gradient(135deg, rgba(0, 33, 71, 0.1), rgba(0, 102, 204, 0.1));
+        border-radius: 16px;
+    }
+    .benefit-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #002147;
+        margin-bottom: 16px;
+        letter-spacing: -0.01em;
+    }
+    .benefit-description {
+        font-size: 1rem;
+        color: #6c757d;
+        line-height: 1.7;
+    }
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 60px 30px 80px;
+            text-align: center;
+            min-height: 60vh;
+        }
+        .company-logo {
+            width: 80px;
+            height: 80px;
+            top: 20px;
+            right: 20px;
+        }
+        .job-title {
+            font-size: 2.5rem;
+        }
+        .section {
+            padding: 60px 30px;
+        }
+        .section-title {
+            font-size: 2.2rem;
+        }
+        .company-stats {
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+        .stat-item {
+            padding: 40px 24px;
+        }
+        .application-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .benefits-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+    }
+    @media (max-width: 480px) {
+        .hero-section {
+            padding: 40px 20px 60px;
+            min-height: 50vh;
+        }
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            top: 16px;
+            right: 16px;
+        }
+        .job-title {
+            font-size: 2rem;
+        }
+        .hero-description {
+            font-size: 1rem;
+        }
+        .section {
+            padding: 40px 20px;
+        }
+        .section-title {
+            font-size: 1.8rem;
+        }
+        .stat-item {
+            padding: 30px 20px;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+        }
+    }
+</style>
+
+<div class="container">
+    <!-- 채용 포지션 표지 -->
+    <section class="hero-section">
+        <div class="company-logo">
+            <img src="https://489156.github.io/JD_ecredible//ecredible-b-kr-crop.png" alt="이크레더블 로고" style="width: 50%; height: auto;">
+        </div>
+        <div class="hero-content">
+            <div class="job-badge">채용 중</div>
+            <h1 class="job-title">이크레더블 인재채용</h1>
+            <p class="company-name">이크레더블 | ecredible</p>
+            <p class="hero-description">We Connect the Business, Transaction and Future</p>
+            <button class="apply-button" onclick="document.getElementById('application-section').scrollIntoView({behavior: 'smooth', block: 'start'});">지원하기</button>
+        </div>
+    </section>
+
+    <!-- 회사 소개 -->
+    <section class="section company-section">
+        <div class="section-header">
+            <h2 class="section-title">회사 소개</h2>
+            <p class="section-subtitle">비즈니스의 연결, 가치를 더하는 이크레더블</p>
+        </div>
+        <div class="section-content">
+            <div class="company-stats">
+                <div class="stat-item">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">직원 수</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">10년</span>
+                    <span class="stat-label">업력</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">프로젝트</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 모집 포지션 소개 -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">모집 포지션</h2>
+            <p class="section-subtitle">사자 경험을 최우선으로 하는 웹 애플리케이션 개발을 담당하며, 최신 기술 스택을 활용한 프론트엔드 개발 업무를 수행합니다.</p>
+        </div>
+        <div class="section-content">
+            <div class="job-details">
+                <div class="detail-card">
+                    <h3 class="detail-title">
+                        <svg class="detail-icon" viewBox="0 0 24 24" style="width: 24px; height: 24px; margin-right: 12px; fill: #002147;">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                        </svg>
+                        주요 업무
+                    </h3>
+                    <ul class="requirement-list">
+                        <li>React/Vue.js 기반 웹 애플리케이션 개발</li>
+                        <li>반응형 웹 디자인 구현</li>
+                        <li>API 연동 및 상태 관리</li>
+                        <li>코드 리뷰 및 품질 관리</li>
+                    </ul>
+                </div>
+                <div class="detail-card">
+                    <h3 class="detail-title">
+                        <svg class="detail-icon" viewBox="0 0 24 24" style="width: 24px; height: 24px; margin-right: 12px; fill: #002147;">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        필수 요건
+                    </h3>
+                    <ul class="requirement-list">
+                        <li>JavaScript, HTML, CSS 숙련</li>
+                        <li>React 또는 Vue.js 경험 2년 이상</li>
+                        <li>Git 사용 경험</li>
+                        <li>팀워크 및 커뮤니케이션 능력</li>
+                    </ul>
+                </div>
+                <div class="detail-card">
+                    <h3 class="detail-title">
+                        <svg class="detail-icon" viewBox="0 0 24 24" style="width: 24px; height: 24px; margin-right: 12px; fill: #002147;">
+                            <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        우대사항
+                    </h3>
+                    <ul class="requirement-list">
+                        <li>TypeScript 사용 경험</li>
+                        <li>Next.js, Nuxt.js 프레임워크 경험</li>
+                        <li>UI/UX 디자인 이해도</li>
+                        <li>백엔드 개발 경험</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 지원방법 및 처우 안내 -->
+    <section class="section application-section" id="application-section">
+        <div class="section-header">
+            <h2 class="section-title">지원방법 및 처우</h2>
+            <p class="section-subtitle">아래 방법으로 지원해주시면 검토 후 연락드리겠습니다. careers@techinnovation.com 또는 온라인 지원서를 통해 지원 가능합니다.</p>
+        </div>
+        <div class="section-content">
+            <div class="application-grid">
+                <div class="application-card">
+                    <svg class="application-icon" viewBox="0 0 24 24" style="width: 48px; height: 48px; margin: 0 auto 16px; fill: #002147;">
+                        <path d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <h3 class="application-title">이메일 지원</h3>
+                    <p class="application-description">이력서와 포트폴리오를 첨부하여 이메일로 지원해주세요.</p>
+                </div>
+                <div class="application-card">
+                    <svg class="application-icon" viewBox="0 0 24 24" style="width: 48px; height: 48px; margin: 0 auto 16px; fill: #002147;">
+                        <path d="M12 14l9-5-9-5-9 5 9 5z M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                    </svg>
+                    <h3 class="application-title">연봉 정보</h3>
+                    <p class="application-description">경력에 따라 4,000만원 ~ 7,000만원 (협의 가능)</p>
+                </div>
+                <div class="application-card">
+                    <svg class="application-icon" viewBox="0 0 24 24" style="width: 48px; height: 48px; margin: 0 auto 16px; fill: #002147;">
+                        <path d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4h3a1 1 0 011 1v11a3 3 0 01-3 3H5a3 3 0 01-3-3V8a1 1 0 011-1h3z" />
+                    </svg>
+                    <h3 class="application-title">근무 조건</h3>
+                    <p class="application-description">주 5일 근무, 유연근무제, 재택근무 가능</p>
+                </div>
+            </div>
+            <!-- 기타 안내사항 -->
+            <div class="additional-info-section">
+                <h3 class="additional-info-title">기타 안내사항</h3>
+                <p class="additional-info-content">서류 전형 합격자에 한해 개별 연락드립니다. 면접 일정은 지원자와 협의하여 진행됩니다. 허위 기재 시 채용이 취소될 수 있습니다. 제출된 서류는 반환되지 않습니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 복리후생 -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">복리후생</h2>
+            <p class="section-subtitle">직원들의 성장과 행복을 위한 다양한 복리후생을 제공합니다.</p>
+        </div>
+        <div class="section-content">
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <svg class="benefit-icon" viewBox="0 0 24 24" style="width: 56px; height: 56px; margin: 0 auto 24px; fill: #002147; padding: 14px; background: linear-gradient(135deg, rgba(0, 33, 71, 0.1), rgba(0, 102, 204, 0.1)); border-radius: 16px;">
+                        <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    <h3 class="benefit-title">교육 지원</h3>
+                    <p class="benefit-description">외부 교육, 컨퍼런스 참가비 지원 및 도서 구입비 지원</p>
+                </div>
+                <div class="benefit-item">
+                    <svg class="benefit-icon" viewBox="0 0 24 24" style="width: 56px; height: 56px; margin: 0 auto 24px; fill: #002147; padding: 14px; background: linear-gradient(135deg, rgba(0, 33, 71, 0.1), rgba(0, 102, 204, 0.1)); border-radius: 16px;">
+                        <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                    <h3 class="benefit-title">건강 관리</h3>
+                    <p class="benefit-description">종합건강검진, 헬스장 이용권, 의료비 지원</p>
+                </div>
+                <div class="benefit-item">
+                    <svg class="benefit-icon" viewBox="0 0 24 24" style="width: 56px; height: 56px; margin: 0 auto 24px; fill: #002147; padding: 14px; background: linear-gradient(135deg, rgba(0, 33, 71, 0.1), rgba(0, 102, 204, 0.1)); border-radius: 16px;">
+                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h3 class="benefit-title">휴가 제도</h3>
+                    <p class="benefit-description">연차 휴가, 리프레시 휴가, 경조사 휴가 지원</p>
+                </div>
+                <div class="benefit-item">
+                    <svg class="benefit-icon" viewBox="0 0 24 24" style="width: 56px; height: 56px; margin: 0 auto 24px; fill: #002147; padding: 14px; background: linear-gradient(135deg, rgba(0, 33, 71, 0.1), rgba(0, 102, 204, 0.1)); border-radius: 16px;">
+                        <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <h3 class="benefit-title">팀 문화</h3>
+                    <p class="benefit-description">팀 빌딩, 워크샵, 회식비 지원 및 자유로운 소통 문화</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
