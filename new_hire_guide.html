@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>신규 입사자 온보딩 가이드</title>
+  <style>
+    :root {
+      --accent: #000049;
+      --accent-transparent: rgba(0, 0, 73, 0.65);
+      --accent-deep: #000020;
+      --neutral-100: #ffffff;
+      --neutral-200: #f4f4f6;
+      --neutral-400: #c2c2c7;
+      --neutral-600: #7a7a86;
+      --neutral-900: #111118;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(160deg, #000000 0%, var(--accent) 50%, #1a1a1a 100%);
+      color: var(--neutral-100);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: clamp(1.5rem, 4vw, 3rem);
+      padding: clamp(1.5rem, 6vw, 4.5rem);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      grid-column: 1 / -1;
+      display: grid;
+      gap: 1.5rem;
+      text-align: center;
+      padding: clamp(2.5rem, 8vw, 5rem) clamp(1.5rem, 4vw, 3rem);
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.45) 0%, var(--accent-transparent) 50%, rgba(0, 0, 0, 0.65) 100%);
+      border-radius: 2.5rem;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      animation: floatIn 1.2s ease forwards;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      inset: -30% -30% auto auto;
+      width: min(60vw, 600px);
+      height: min(60vw, 600px);
+      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.12), transparent 60%);
+      z-index: -1;
+      filter: blur(0.5px);
+      animation: pulseGlow 6s ease-in-out infinite;
+    }
+
+    header h1 {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    header p {
+      margin: 0;
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+      color: var(--neutral-400);
+      max-width: 50ch;
+      justify-self: center;
+      line-height: 1.8;
+    }
+
+    nav {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: clamp(0.75rem, 2vw, 1.5rem);
+      padding: clamp(1rem, 3vw, 2rem);
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(12px);
+      border-radius: 1.5rem;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 20px 40px rgba(0, 0, 0, 0.4);
+      position: sticky;
+      top: 1rem;
+      z-index: 10;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--neutral-200);
+      font-size: 0.95rem;
+      padding: 0.65rem 1.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.12), rgba(0, 0, 0, 0.2));
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    section {
+      grid-column: 1 / -1;
+      display: grid;
+      gap: 2.5rem;
+      padding: clamp(2rem, 6vw, 3.5rem);
+      margin: clamp(1rem, 4vw, 3rem) 0;
+      background: linear-gradient(160deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.25) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 2rem;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(14px);
+      animation: fadeUp 0.9s ease forwards;
+    }
+
+    section:nth-of-type(even) {
+      background: linear-gradient(200deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 100%);
+    }
+
+    section h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .section-intro {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .section-intro p {
+      color: var(--neutral-400);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .grid {
+      display: grid;
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+    }
+
+    .grid-cols-2 {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .card {
+      position: relative;
+      background: rgba(17, 17, 24, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 1.5rem;
+      padding: clamp(1.5rem, 3vw, 2rem);
+      box-shadow: 0 24px 40px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(140deg, rgba(255, 255, 255, 0.08), transparent 55%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 1.25rem;
+      letter-spacing: 0.02em;
+      color: var(--neutral-200);
+    }
+
+    .card p,
+    .card li {
+      color: var(--neutral-400);
+      line-height: 1.7;
+    }
+
+    .taglist {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .taglist span {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--neutral-400);
+      background: rgba(0, 0, 0, 0.35);
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: clamp(1.5rem, 3vw, 2.5rem);
+      display: grid;
+      gap: 2rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 0.6rem;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.4));
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: clamp(1rem, 2vw, 1.5rem);
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -1.15rem;
+      top: 0.25rem;
+      width: 0.8rem;
+      height: 0.8rem;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      background: radial-gradient(circle, var(--accent) 0%, #000 70%);
+      box-shadow: 0 0 15px rgba(0, 0, 73, 0.45);
+    }
+
+    details {
+      border-radius: 1.25rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.45);
+      padding: 1.25rem 1.5rem;
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+
+    details[open] {
+      background: rgba(0, 0, 0, 0.6);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--neutral-200);
+      list-style: none;
+    }
+
+    summary::marker {
+      display: none;
+    }
+
+    summary span {
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--neutral-400);
+    }
+
+    details p,
+    details ul {
+      margin-top: 1rem;
+      color: var(--neutral-400);
+      line-height: 1.7;
+    }
+
+    .cta {
+      grid-column: 1 / -1;
+      display: grid;
+      justify-items: center;
+      gap: 1rem;
+      padding: clamp(2rem, 6vw, 3.5rem);
+      background: linear-gradient(120deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 73, 0.6));
+      border-radius: 2.5rem;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.55);
+      text-align: center;
+    }
+
+    .cta a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      padding: 0.9rem 2.4rem;
+      border-radius: 999px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--neutral-100);
+      background: linear-gradient(135deg, var(--accent) 0%, rgba(0, 0, 0, 0.85) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.45);
+      text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .cta a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    footer {
+      grid-column: 1 / -1;
+      padding: 2rem 0 4rem;
+      text-align: center;
+      color: var(--neutral-600);
+      font-size: 0.85rem;
+    }
+
+    footer p {
+      margin: 0.35rem 0;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatIn {
+      0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes pulseGlow {
+      0%,
+      100% {
+        opacity: 0.25;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.45;
+        transform: scale(1.05);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .layout {
+        padding: clamp(1.2rem, 6vw, 2rem);
+      }
+
+      header {
+        border-radius: 1.75rem;
+      }
+
+      nav {
+        position: static;
+      }
+
+      section {
+        border-radius: 1.5rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <header>
+      <p>온보딩 가이드 · 2025</p>
+      <h1>새로운 출발, 함께 성장하는 여정</h1>
+      <p>
+        이크레더블의 일원이 된 것을 환영합니다. 여러분의 빠른 적응과 성장을 돕기 위해 준비한
+        신규 입사자 온보딩 가이드입니다. 처음 만나는 환경에서도 분명한 방향성과 자신감을 가질 수 있도록, 꼭 필요한 정보를 차분하게 안내해 드립니다.
+      </p>
+    </header>
+
+    <nav>
+      <a href="#about">회사 소개</a>
+      <a href="#setup">초기 환경 설정</a>
+      <a href="#policies">회사 제도</a>
+      <a href="#insights">참고 사항</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <section id="about">
+      <div class="section-intro">
+        <h2>회사 소개</h2>
+        <p>
+          데이터로 신뢰를 설계하는 이크레더블은 디지털 신용평가를 중심으로 기업의 성장 파트너가 되는 것을 목표로 합니다.
+          핵심 가치와 비전을 이해하면 여러분의 역할이 회사와 어떻게 연결되는지 한층 선명하게 다가옵니다.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2">
+        <article class="card">
+          <h3>미션 &amp; 비전</h3>
+          <p>
+            "데이터 인텔리전스로 더 나은 금융 생태계를 만든다"는 비전 아래, 고객의 성장을 지원하는 정밀한 신용 솔루션을 제공합니다.
+          </p>
+          <div class="taglist">
+            <span>고객 중심</span>
+            <span>데이터 투명성</span>
+            <span>지속가능 성장</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>핵심 가치</h3>
+          <ul>
+            <li><strong>Trust:</strong> 신뢰를 최우선으로 하는 데이터 활용</li>
+            <li><strong>Agility:</strong> 빠른 실행과 개선으로 시장을 선도</li>
+            <li><strong>Collaboration:</strong> 부서 간 매끄러운 협업으로 고객 가치를 극대화</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="card">
+        <h3>온보딩 타임라인</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <h4>Day 1 · 웰컴 브리핑</h4>
+            <p>HR 오리엔테이션, 보안 가이드 서약, 팀 소개 및 업무 도구 계정 발급.</p>
+          </div>
+          <div class="timeline-item">
+            <h4>Week 1 · 몰입 주간</h4>
+            <p>직무별 핵심 교육, 실습 프로젝트 배정, 멘토와의 1:1 체크인.</p>
+          </div>
+          <div class="timeline-item">
+            <h4>Month 1 · 성장 리뷰</h4>
+            <p>OKR 합의, 업무 목표 리마인드, 역량 강화 로드맵 수립.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="setup">
+      <div class="section-intro">
+        <h2>초기 환경 설정</h2>
+        <p>
+          입사 초기, 업무 효율을 좌우하는 주요 시스템과 장비 설정 방법을 빠르게 익혀보세요. 아래 단계별 안내에 따라 진행하면 안전하게 업무 환경을 구축할 수 있습니다.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2">
+        <article class="card">
+          <h3>기기 &amp; 보안</h3>
+          <ul>
+            <li>노트북 최초 로그인 후 <strong>BitLocker/ FileVault</strong> 암호화 설정</li>
+            <li>사내 Wi-Fi: <strong>EC_Secure</strong> 접속 → 사번 기반 인증</li>
+            <li>보안 프로그램 설치: <strong>Endpoint Guardian</strong>, <strong>Vaccine Shield</strong></li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>협업 도구 연결</h3>
+          <ul>
+            <li><strong>WorkHub</strong>: 조직도 확인, 전자결재 진행</li>
+            <li><strong>Slack</strong>: 팀 채널 가입, 알림 정책 설정</li>
+            <li><strong>Notion</strong>: 매뉴얼/프로젝트 위키 열람 권한 확인</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>개발/분석 환경</h3>
+          <ul>
+            <li>GitLab 계정 활성화 후 <strong>SSH 키 등록</strong></li>
+            <li>패키지 관리자 사전 설치: <strong>pipenv</strong>, <strong>npm</strong></li>
+            <li>데이터베이스 접근: <strong>VPN 연결</strong> → <strong>ZeroTrust 포털</strong> 인증</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>지원 채널</h3>
+          <p>문제가 발생하면 다음 채널로 문의하세요.</p>
+          <ul>
+            <li>IT 헬프데스크: <strong>helpdesk@ecredible.co.kr</strong></li>
+            <li>보안 사고 신고: <strong>security@ecredible.co.kr</strong></li>
+            <li>업무 도구 교육 예약: 인재개발 Slack 채널 <strong>#learning-support</strong></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="policies">
+      <div class="section-intro">
+        <h2>회사 제도</h2>
+        <p>
+          이크레더블은 직원의 몰입과 성장에 집중합니다. 균형 있는 업무 환경과 공정한 평가를 위한 제도를 확인하세요.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2">
+        <article class="card">
+          <h3>근무 &amp; 휴가</h3>
+          <ul>
+            <li>유연근무제 (선택근무/원격근무) 신청: WorkHub &gt; 근태관리</li>
+            <li>입사 시 연차 15일, 사용 현황은 WorkHub 캘린더에서 확인</li>
+            <li>리프레시 휴가: 재직 3년마다 5일 추가 부여</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>평가 &amp; 보상</h3>
+          <ul>
+            <li>반기별 OKR 리뷰, 1:1 피드백 의무 진행</li>
+            <li>성과급 제도: 회사/팀/개인 지표 기반 차등 지급</li>
+            <li>역량 향상 지원비: 연 200만원 한도 내 자기개발 신청</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>복지 &amp; 지원</h3>
+          <ul>
+            <li>사내 카페 &amp; 피트니스 무료 이용</li>
+            <li>멘탈케어 프로그램: 외부 상담 서비스 연 6회 지원</li>
+            <li>가족돌봄 · 출산 휴가 시 탄력근무 가이드 제공</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>커뮤니케이션</h3>
+          <ul>
+            <li>월간 타운홀: 경영진 Q&amp;A 및 성과 공유</li>
+            <li>아이디어 제안: Notion → Innovation Board 제출</li>
+            <li>윤리 핫라인: 익명 신고 시스템 상시 운영</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="insights">
+      <div class="section-intro">
+        <h2>참고 사항</h2>
+        <p>
+          부서별 선배들이 전하는 실전 팁과 회사 생활에 도움이 되는 자료를 모았습니다. 새로운 환경에서도 자신감 있게 첫걸음을 내딛으세요.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2">
+        <article class="card">
+          <h3>업무 흐름</h3>
+          <p>프로젝트는 <strong>Discovery → Build → Review → Deploy</strong>의 4단계 스프린트로 운영됩니다. 각 단계 마감 전 체크리스트를 확인하세요.</p>
+        </article>
+
+        <article class="card">
+          <h3>코칭 네트워크</h3>
+          <p>
+            멘토-멘티 매칭 프로그램을 통해 직무별 전문가에게 월 2회 코칭을 받을 수 있습니다. Slack <strong>#mentoring-hub</strong> 채널에서 신청하세요.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>지식 베이스</h3>
+          <p>
+            Notion Onboarding Space → <strong>Getting Started</strong> 섹션에는 업무 플로우, 코드 스타일 가이드, 참고 영상이 정리되어 있습니다.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>버디 체크인</h3>
+          <p>
+            입사 후 4주 동안 주 1회 버디와 체크인을 진행하며 궁금한 점을 해결하고 팀 문화를 이해합니다.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="section-intro">
+        <h2>FAQ</h2>
+        <p>
+          신규 입사자들이 가장 자주 묻는 질문을 정리했습니다. 추가 질문이 있다면 People Experience 팀으로 언제든지 연락하세요.
+        </p>
+      </div>
+
+      <div class="grid">
+        <details>
+          <summary>
+            계정 발급이 지연될 때 어떻게 해야 하나요?
+            <span>시스템</span>
+          </summary>
+          <p>
+            WorkHub 계정은 입사 전날 자동 발급됩니다. 발급 메일이 도착하지 않았다면 IT 헬프데스크로 문의하고, 긴급한 경우 매니저에게 임시 권한 요청을 진행하세요.
+          </p>
+        </details>
+
+        <details>
+          <summary>
+            재택근무 신청은 언제까지 가능할까요?
+            <span>근태</span>
+          </summary>
+          <p>
+            재택근무는 전날 17시 이전에 WorkHub → 근태 신청 메뉴에서 승인 요청해야 하며, 긴급 상황은 팀장의 Slack 승인 메시지를 첨부하면 됩니다.
+          </p>
+        </details>
+
+        <details>
+          <summary>
+            교육 프로그램은 어떻게 참여하나요?
+            <span>성장</span>
+          </summary>
+          <p>
+            인재개발팀이 매월 마지막 주 Notion 보드에 교육 일정을 공지합니다. 원하는 과정에 신청한 뒤, Slack <strong>#learning-support</strong> 채널에서 자리 배정 안내를 받으세요.
+          </p>
+        </details>
+
+        <details>
+          <summary>
+            회사 이메일 서명 규정이 있나요?
+            <span>브랜드</span>
+          </summary>
+          <p>
+            온보딩 포털에서 제공하는 템플릿을 복사하여 사용해주세요. 이름/직함/연락처 외의 문구는 사전 승인을 받아야 합니다.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <div class="cta">
+      <h2>도움이 필요하신가요?</h2>
+      <p>
+        People Experience 팀이 여러분의 온보딩 여정을 함께합니다. 문의 사항을 남겨주시면 24시간 이내에 답변드립니다.
+      </p>
+      <a href="mailto:onboarding@ecredible.co.kr">문의하기</a>
+    </div>
+
+    <footer>
+      <p>© 2025 eCredible Inc. All rights reserved.</p>
+      <p>신뢰를 기반으로 미래를 설계합니다.</p>
+    </footer>
+  </div>
+</body>
+</html>
